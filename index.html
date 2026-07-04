@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسجد اسمارٹ لائیو ڈسپلے بورڈ V18.1 WhatsApp Integration</title>
+    <title>مسجد اسمارٹ لائیو ڈسپلے بورڈ V18.1</title>
     
     <meta name="theme-color" content="#f4f7f5">
     
@@ -461,7 +461,7 @@
         </div>
 
         <div class="header-board">
-            <h1 id="masjid-title">جامع مسجد بلال</h1>
+            <h1 id="masjid-title">جامع مسجد </h1>
             
             <div style="display: flex; justify-content: center; margin-top: 15px; margin-bottom: 10px;">
                 <div class="clock-container big-clock" id="live-clock">
@@ -643,21 +643,22 @@
 
         <div class="visitor-counter-badge">
             <div class="counter-item">
-                <span>📊 کل آمد (Total Visits):</span>
+                <span>📊 (Total Visits):</span>
                 <span id="total-visits-val" class="counter-val">...</span>
             </div>
             <div class="counter-item">
-                <span>📅 آج کی آمد (Today's Visits):</span>
+                <span>📅 (Today's Visits):</span>
                 <span id="today-visits-val" class="counter-val">...</span>
             </div>
         </div>
 
-        <div class="footer-banner" id="footer-tag">اسمارٹ ڈسپلے پینل V18.1 WhatsApp Integration</div>
+        <div class="footer-banner" id="footer-tag">اسمارٹ ڈسپلے پینل V18.1 </div>
 
         <div class="whatsapp-contact-card">
             <div class="whatsapp-card-title">🕌 فی سبیل اللہ فری مسجد ویب سائٹ سیٹ اپ</div>
             <div class="whatsapp-card-desc">اگر آپ بھی اپنے علاقے کی مسجد کے لیے یہ ڈیجیٹل ڈسپلے بورڈ ویب سائٹ بالکل مفت (بشمول مکمل کنفیگریشن) حاصل کرنا چاہتے ہیں، تو ابھی نیچے بٹن پر کلک کر کے ڈیولپر سے رابطہ کریں۔</div>
-            <a href="https://wa.me/923425944951?text=%D8%A7%D8%B3%D9%84%D8%A7%D9%85%20%D9%B9%20%D8%B9%D9%84%DB%8C%DA%A9%D9%85%D9%90%D8%8C%20%D9%85%DBC%20%D8%A7%D9%BE%D9%86%DB%92%20%D8%A7%D9%84%D8%A7%D9%82%DB%92%20%DA%A9%DB%8C%20%D9%85%D8%B3%D8%AC%D8%AF%20%DA%A9%DB%92%20%D9%84%DB%8C%DB%92%20%DB%8C%DB%81%20%D8%A7%D8%B3%D9%85%D8%A7%D8%B1%D9%B9%20%D8%A7%D9%84%D8%A7%D8%A6%DB%8C%D9%88%20%DA%8A%D8%B3%D9%BE%D9%84%DB%92%20%D8%A8%D9%82%D8%A7%20%D9%84%DA%AF%D9%88%D8%A7%D9%86%D8%A7%20%DA%8A%D8%A7%DB%81%D8%AA%D8%A7%20%DB%81%D9%88%DA%BA%DB%94%20%D9%BE%D9%84%DB%8C%D8%B2%20%D9%85%D8%AC%DA%BE%DB%92%20%D8%A7%D8%B3%20DA%20%D9%81%D8%B1%DB%8C%20%DA%A9%D9%86%D9%81%DB%8C%DA%AF%D8%B1%DB%8C%D8%B4%D9%86%20%DA%A9%DB%92%20%D8%A8%D8%A7%D8%B1%DB%92%20%D9%85%DB%8C%DA%BA%20%D8%A8%D8%AA%D8%A7%20%D8%AF%DB%8C%DA%BA%DB%94" target="_blank" class="whatsapp-action-btn">
+            <a href="https://wa.me/923425944951?text=السلام علیکم،  
+میں اپنی علاقے کی مسجد کے لیے یہ اسمارٹ ڈسپلے لگوانا چاہتا ہوں۔ براہِ مہربانی مجھے اس کی فری کنفیگریشن کے بارے میں بتا دیں" target="_blank" class="whatsapp-action-btn">
                 💬 واٹس ایپ پر رابطہ کریں
             </a>
         </div>
@@ -1079,7 +1080,7 @@
             if(!newDevPass || newDevPass.length < 4) { alert('پاس ورڈ کم از کم 4 ہندسوں یا حروف کا ہونا ضروری ہے!'); return; }
             
             developerInfoRef.child("devPassword").set(newDevPass).then(() => {
-                alert('ڈیولپر پاس ورڈ کامیابی سے روٹ کلاؤڈ پر "developerInfo" ٹیگ کے اندر اپڈیٹ کر دیا گیا ہے!');
+                alert('ڈیولپر پاس ورڈ کامیابی سے روٹ کلاؤڈ پر ٹیگ کے اندر اپڈیٹ کر دیا گیا ہے!');
                 cachedCloudDevPassword = newDevPass;
                 document.getElementById('new-developer-password').value = "";
             }).catch(() => { alert('خرابی: ڈیولپر پاس ورڈ تبدیل نہیں ہو سکا۔'); });
