@@ -31,6 +31,65 @@
                 }
             ]
         };
+<!-- PWA Meta Tags for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="مسجد کلاک">
+    
+    <!-- Inline Masjid SVG Icon for Apple Devices -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%2311291a'/%3E%3Cpath d='M256 60l-35 80h70zM170 240h172v160H170z' fill='%23c5a059'/%3E%3Cpath d='M256 120c-50 0-90 40-90 90h180c0-50-40-90-90-90z' fill='%23c5a059'/%3E%3Crect x='236' y='290' width='40' height='110' rx='20' fill='%2311291a'/%3E%3Cpath d='M120 220h30v180h-30zM362 220h30v180h-30z' fill='%23c5a059'/%3E%3Cpath d='M105 220l15-40 15 40zM347 220l15-40 15 40z' fill='%23c5a059'/%3E%3C/svg%3E">
+    
+    <!-- Dynamic PWA Manifest & Service Worker Injection Logic -->
+    <script>
+        // Inline SVG Code for Masjid Icon (Green Background with Elegant Gold Dome & Minarets)
+        const inlineMasjidIcon = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%2311291a'/%3E%3Cpath d='M256 60l-35 80h70zM170 240h172v160H170z' fill='%23c5a059'/%3E%3Cpath d='M256 120c-50 0-90 40-90 90h180c0-50-40-90-90-90z' fill='%23c5a059'/%3E%3Crect x='236' y='290' width='40' height='110' rx='20' fill='%2311291a'/%3E%3Cpath d='M120 220h30v180h-30zM362 220h30v180h-30z' fill='%23c5a059'/%3E%3Cpath d='M105 220l15-40 15 40zM347 220l15-40 15 40z' fill='%23c5a059'/%3E%3C/svg%3E";
+
+        // 1. Generate Manifest Dynamic Data URL
+        const masjidNameForPwa = "جامع مسجد بلال"; 
+        const manifestObj = {
+            "name": masjidNameForPwa,
+            "short_name": "مسجد کلاک",
+            "start_url": window.location.href,
+            "display": "standalone",
+            "background_color": "#f4f7f5",
+            "theme_color": "#f4f7f5",
+            "icons": [
+                {
+                    "src": inlineMasjidIcon,
+                    "sizes": "512x512",
+                    "type": "image/svg+xml",
+                    "purpose": "any maskable"
+                }
+            ]
+        };
+        
+        const manifestStr = JSON.stringify(manifestObj);
+        const manifestBlob = new Blob([manifestStr], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        
+        // Inject Manifest Link dynamically into Head
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = manifestURL;
+        document.head.appendChild(manifestLink);
+
+        // 2. Generate Inline Service Worker
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (e) => { self.skipWaiting(); });
+                self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
+                self.addEventListener('fetch', (e) => { 
+                    e.respondWith(fetch(e.request).catch(() => new Response("Offline mode active")));
+                });
+            `;
+            const swBlob = new Blob([swCode], {type: 'application/javascript'});
+            const swURL = URL.createObjectURL(swBlob);
+            
+            navigator.serviceWorker.register(swURL)
+                .then(() => console.log("Single-File Service Worker Registered!"))
+                .catch(err => console.log("SW Registration Failed", err));
+        }
+    </script>
         
         const manifestStr = JSON.stringify(manifestObj);
         const manifestBlob = new Blob([manifestStr], {type: 'application/json'});
