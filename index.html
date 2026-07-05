@@ -10,11 +10,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="مسجد کلاک">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2987/2987971.png">
+    <link rel="apple-touch-icon" href="https://static.vecteezy.com/system/resources/thumbnails/010/870/943/small_2x/mosque-icon-design-silhouette-png.png">
     
     <script>
         // 1. Generate Manifest Dynamic Data URL
-        const masjidNameForPwa = "مسجد ٹائم "; // Future me aap bas yehi se naam badal sakte hain
+        const masjidNameForPwa = "مسجد کلاک "; // Future me aap bas yehi se naam badal sakte hain
         const manifestObj = {
             "name": masjidNameForPwa,
             "short_name": "مسجد کلاک",
@@ -80,7 +80,8 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        
+
+        // Masjid Ka Name Firebase Kay Lie Yahan Se Set Karen
         const MASJID_ID = "masjidData"; 
 
         // Main References on Root Level
@@ -740,12 +741,12 @@
             </div>
         </div>
 
-        <div class="footer-banner" id="footer-tag">اسمارٹ ڈسپلے پینل V18.6 Single-File PWA</div>
+        <div class="footer-banner" id="footer-tag">اسمارٹ ڈسپلے پینل V18.6</div>
 
         <div class="whatsapp-contact-card">
             <div class="whatsapp-card-title">🕌 فی سبیل اللہ فری مسجد ویب سائٹ سیٹ اپ</div>
             <div class="whatsapp-card-desc">اگر آپ بھی اپنے علاقے کی مسجد کے لیے یہ ڈیجیٹل ڈسپلے بورڈ ویب سائٹ بالکل مفت حاصل کرنا چاہتے ہیں، تو ابھی نیچے بٹن پر کلک کر کے رابطہ کریں۔</div>
-            <a href="https://wa.me/923425944951?text="السلام علیکم،  میں اپنی علاقے کی مسجد کے لیے یہ اسمارٹ ڈسپلے لگوانا چاہتا ہوں۔ براہِ مہربانی مجھے اس کی فری کنفیگریشن کے بارے میں بتا دیں" target="_blank" class="whatsapp-action-btn">
+            <a href="https://wa.me/923425944951?text=السلام علیکم،  میں اپنی علاقے کی مسجد کے لیے یہ اسمارٹ ڈسپلے لگوانا چاہتا ہوں۔ براہِ مہربانی مجھے اس کی فری کنفیگریشن کے بارے میں بتا دیں" target="_blank" class="whatsapp-action-btn">
                 💬 واٹس ایپ پر رابطہ کریں
             </a>
         </div>
@@ -853,7 +854,7 @@
         function shareMasjidWebsite() {
             const currentMasjidName = document.getElementById('masjid-title').innerText || "مسجد";
             const currentURL = window.location.href;
-            const shareText = ` 🕌 *نماز کے اوقات اور مسجد اپڈیٹس* 🕌\n\nالسلام علیکم! ہمارے علاقے کی *${currentMasjidName}*   گھر کے تمام افراد اور دوست احباب اس لنک پر کلک کر کے سحری، افطاری، اذان اور جماعت کے اوقات سے باخبر رہ سکتے ہیں \n\nکا لائیو ڈیجیٹل کلاک بورڈ اور نماز کے درست اوقات اب آن لائن دستیاب ہیں۔ \n\n🔗 ${currentURL}`;
+            const shareText = ` 🕌 *نماز کے اوقات اور مسجد اپڈیٹس* 🕌\n\nالسلام علیکم! ہمارے علاقے کی *${currentMasjidName}* کا لائیو ڈیجیٹل کلاک بورڈ اور نماز کے درست اوقات اب آن لائن دستیاب ہیں۔ \n\n گھر کے تمام افراد اور دوست احباب اس لنک پر کلک کر کے سحری، افطاری، اذان اور جماعت کے اوقات سے باخبر رہ سکتے ہیں \n\n🔗 ${currentURL}`;
 
             if (navigator.share) {
                 navigator.share({ title: currentMasjidName, text: shareText }).catch((error) => console.log('Sharing failed', error));
