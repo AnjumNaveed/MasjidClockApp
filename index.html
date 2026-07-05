@@ -10,15 +10,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="مسجد کلاک">
-    
-    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%2311291a'/%3E%3Cpath d='M256 60l-35 80h70zM170 240h172v160H170z' fill='%23c5a059'/%3E%3Cpath d='M256 120c-50 0-90 40-90 90h180c0-50-40-90-90-90z' fill='%23c5a059'/%3E%3Crect x='236' y='290' width='40' height='110' rx='20' fill='%2311291a'/%3E%3Cpath d='M120 220h30v180h-30zM362 220h30v180h-30z' fill='%23c5a059'/%3E%3Cpath d='M105 220l15-40 15 40zM347 220l15-40 15 40z' fill='%23c5a059'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2987/2987971.png">
     
     <script>
-        // Inline SVG Code for Masjid Icon 
-        const inlineMasjidIcon = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%2311291a'/%3E%3Cpath d='M256 60l-35 80h70zM170 240h172v160H170z' fill='%23c5a059'/%3E%3Cpath d='M256 120c-50 0-90 40-90 90h180c0-50-40-90-90-90z' fill='%23c5a059'/%3E%3Crect x='236' y='290' width='40' height='110' rx='20' fill='%2311291a'/%3E%3Cpath d='M120 220h30v180h-30zM362 220h30v180h-30z' fill='%23c5a059'/%3E%3Cpath d='M105 220l15-40 15 40zM347 220l15-40 15 40z' fill='%23c5a059'/%3E%3C/svg%3E";
-
         // 1. Generate Manifest Dynamic Data URL
-        const masjidNameForPwa = "مسجد کلاک"; // Future me aap bas yehi se naam badal sakte hain
+        const masjidNameForPwa = "مسجد ٹائم "; // Future me aap bas yehi se naam badal sakte hain
         const manifestObj = {
             "name": masjidNameForPwa,
             "short_name": "مسجد کلاک",
@@ -28,13 +24,13 @@
             "theme_color": "#f4f7f5",
             "icons": [
                 {
-                    "src": inlineMasjidIcon,
+                    "src": "https://cdn-icons-png.flaticon.com/512/2987/2987971.png",
                     "sizes": "512x512",
-                    "type": "image/svg+xml",
+                    "type": "image/png",
                     "purpose": "any maskable"
                 }
             ]
-        };
+        }
         
         const manifestStr = JSON.stringify(manifestObj);
         const manifestBlob = new Blob([manifestStr], {type: 'application/json'});
@@ -52,6 +48,7 @@
                 self.addEventListener('install', (e) => { self.skipWaiting(); });
                 self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
                 self.addEventListener('fetch', (e) => { 
+                    // Network-first or fetch directly bypass for dynamic Firebase apps
                     e.respondWith(fetch(e.request).catch(() => new Response("Offline mode active")));
                 });
             `;
@@ -84,7 +81,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         
-        const MASJID_ID = "masjidData"; // Nayi masjid ke liye baseline node id yahan se badli ja sakti hai
+        const MASJID_ID = "masjidData"; 
 
         // Main References on Root Level
         const masjidMainRef = db.ref(MASJID_ID);
@@ -308,8 +305,18 @@
             margin-bottom: 15px;
         }
         
-        .announcement-title { font-size: 15px; font-weight: bold; color: var(--gold-color); margin-bottom: 6px; }
-        .announcement-text { font-size: 14px; color: #ffffff; line-height: 1.6; font-weight: bold; }
+        .announcement-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--gold-color);
+            margin-bottom: 6px;
+        }
+        .announcement-text {
+            font-size: 14px;
+            color: #ffffff;
+            line-height: 1.6;
+            font-weight: bold;
+        }
 
         .developer-info-card {
             display: none;
@@ -322,8 +329,24 @@
             margin-bottom: 15px;
             text-align: center;
         }
-        .dev-card-text { font-size: 13px; color: var(--text-light); margin-bottom: 8px; line-height: 1.5; }
-        .dev-card-btn { background-color: var(--gold-color); color: #ffffff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+        .dev-card-text {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .dev-card-btn {
+            background-color: var(--gold-color);
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
 
         .ramadan-overlay {
             display: none;
@@ -528,7 +551,7 @@
         </div>
 
         <div class="header-board">
-            <h1 id="masjid-title">جامع مسجد</h1>
+            <h1 id="masjid-title"> مسجد </h1>
             
             <div style="display: flex; justify-content: center; margin-top: 15px; margin-bottom: 10px;">
                 <div class="clock-container big-clock" id="live-clock">
@@ -717,12 +740,12 @@
             </div>
         </div>
 
-        <div class="footer-banner" id="footer-tag">اسمارٹ ڈسپلے پینل V1.0</div>
+        <div class="footer-banner" id="footer-tag">اسمارٹ ڈسپلے پینل V18.6 Single-File PWA</div>
 
         <div class="whatsapp-contact-card">
             <div class="whatsapp-card-title">🕌 فی سبیل اللہ فری مسجد ویب سائٹ سیٹ اپ</div>
             <div class="whatsapp-card-desc">اگر آپ بھی اپنے علاقے کی مسجد کے لیے یہ ڈیجیٹل ڈسپلے بورڈ ویب سائٹ بالکل مفت حاصل کرنا چاہتے ہیں، تو ابھی نیچے بٹن پر کلک کر کے رابطہ کریں۔</div>
-            <a href="https://wa.me/923425944951?text=السلام علیکم،  میں اپنی علاقے کی مسجد کے لیے یہ اسمارٹ ڈسپلے لگوانا چاہتا ہوں۔ براہِ مہربانی مجھے اس کی فری کنفیگریشن کے بارے میں بتا دیں" target="_blank" class="whatsapp-action-btn">
+            <a href="https://wa.me/923425944951?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%DB%8C%DA%A9%D9%85%D8%9C%20%D9%85%DBC%20%D8%A7%D9%BE%D9%86%DB%92%20%D8%A7%D9%84%D8%A7%D9%82%DB%92%20%DA%A9%DB%8C%20%D9%85%D8%B3%D8%AC%D8%AF%20%DA%A9%DB%92%20%D9%84%DB%8C%DB%92%20%DB%8C%DB%81%20%D8%A7%D8%B3%D9%85%D8%A7%D8%B1%D9%B9%20%D8%A7%D9%84%D8%A7%D8%A6%DB%8C%D9%85%20%DA%8A%D8%B3%D9%BE%D9%84%DB%92%20%D8%A8%D9%8A%DA%88%20%D9%84%DA%AF%D9%88%D8%A7%D9%86%D8%A7%20%DA%8A%D8%A7%DB%81%D8%AA%D8%A7%20%DB%81%D9%88%DA%BA%DB%94" target="_blank" class="whatsapp-action-btn">
                 💬 واٹس ایپ پر رابطہ کریں
             </a>
         </div>
@@ -750,7 +773,9 @@
         let deferredPrompt = null;
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); deferredPrompt = e;
+            e.preventDefault();
+            deferredPrompt = e;
+            
             document.getElementById('pwa-top-install-btn').style.display = 'block';
             if (!sessionStorage.getItem('pwaBannerDismissed')) {
                 document.getElementById('pwa-custom-banner').style.display = 'block';
@@ -761,18 +786,26 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') dismissPwaBanner();
+                    if (choiceResult.outcome === 'accepted') {
+                        dismissPwaBanner();
+                    }
                     deferredPrompt = null;
                 });
-            } else { detectAndShowDeviceInstructions(); }
+            } else {
+                detectAndShowDeviceInstructions();
+            }
         }
 
         function detectAndShowDeviceInstructions() {
             const userAgent = window.navigator.userAgent.toLowerCase();
             const isIos = /iphone|ipad|ipod/.test(userAgent);
-            let message = isIos ? 
-                "🍏 iOS (iPhone/iPad): نیچے موجود 'Share' (تیر کا نشان) بٹن پر کلک کریں اور پھر 'Add to Home Screen' منتخب کریں۔" : 
-                "📱 انسٹالیشن گائیڈ: اوپر دائیں کونے میں 3 ڈاٹس پر کلک کریں اور 'Install App' یا 'Add to Home Screen' کو منتخب کریں۔";
+            let message = "";
+            
+            if (isIos) {
+                message = "🍏 iOS (iPhone/iPad): نیچے موجود 'Share' (تیر کا نشان) بٹن پر کلک کریں اور پھر 'Add to Home Screen' منتخب کریں۔";
+            } else {
+                message = "📱 انسٹالیشن گائیڈ: اوپر دائیں کونے میں 3 ڈاٹس (آپشنز) پر کلک کریں اور 'Install App' یا 'Add to Home Screen' کو منتخب کریں۔";
+            }
             
             document.getElementById('pwa-dynamic-instructions').innerText = message;
             document.getElementById('pwa-custom-banner').style.display = 'block';
@@ -784,7 +817,7 @@
             sessionStorage.setItem('pwaBannerDismissed', 'true');
         }
 
-        window.addEventListener('appinstalled', () => {
+        window.addEventListener('appinstalled', (evt) => {
             document.getElementById('pwa-top-install-btn').style.display = 'none';
             dismissPwaBanner();
             alert("ماشاءاللہ! ویب ایپ کامیابی کے ساتھ آپ کی ہوم اسکرین پر شامل کر دی گئی ہے۔");
@@ -804,16 +837,31 @@
             localStorage.setItem('localThemeChoiceIndex', index);
         }
 
-        function switchTheme() { currentThemeIndex = (currentThemeIndex + 1) % localThemesArray.length; applyLocalTheme(currentThemeIndex); }
-        function loadLocalSavedTheme() { let cachedIndex = localStorage.getItem('localThemeChoiceIndex'); if(cachedIndex !== null) { currentThemeIndex = parseInt(cachedIndex); applyLocalTheme(currentThemeIndex); } }
+        function switchTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % localThemesArray.length;
+            applyLocalTheme(currentThemeIndex);
+        }
+
+        function loadLocalSavedTheme() {
+            let cachedIndex = localStorage.getItem('localThemeChoiceIndex');
+            if(cachedIndex !== null) {
+                currentThemeIndex = parseInt(cachedIndex);
+                applyLocalTheme(currentThemeIndex);
+            }
+        }
 
         function shareMasjidWebsite() {
             const currentMasjidName = document.getElementById('masjid-title').innerText || "مسجد";
             const currentURL = window.location.href;
             const shareText = ` 🕌 *نماز کے اوقات اور مسجد اپڈیٹس* 🕌\n\nالسلام علیکم! ہمارے علاقے کی *${currentMasjidName}* کا لائیو ڈیجیٹل کلاک بورڈ اور نماز کے درست اوقات اب آن لائن دستیاب ہیں۔ \n\n🔗 ${currentURL}`;
 
-            if (navigator.share) { navigator.share({ title: currentMasjidName, text: shareText }).catch((error) => console.log(error)); } 
-            else { navigator.clipboard.writeText(shareText).then(() => alert("شیئرنگ ٹیکسٹ لنک کے ساتھ کاپی ہو گیا ہے!")); }
+            if (navigator.share) {
+                navigator.share({ title: currentMasjidName, text: shareText }).catch((error) => console.log('Sharing failed', error));
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert("شیئرنگ ٹیکسٹ لنک کے ساتھ کاپی ہو گیا ہے!");
+                });
+            }
         }
 
         function playDigitalChime() {
@@ -821,7 +869,8 @@
                 if(!audioEnabled) return;
                 if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 let nowTime = audioCtx.currentTime;
-                let osc1 = audioCtx.createOscillator(); let gain1 = audioCtx.createGain();
+                let osc1 = audioCtx.createOscillator();
+                let gain1 = audioCtx.createGain();
                 osc1.type = "sine"; osc1.frequency.setValueAtTime(880, nowTime); 
                 gain1.gain.setValueAtTime(0.4, nowTime); gain1.gain.exponentialRampToValueAtTime(0.001, nowTime + 0.6);
                 osc1.connect(gain1); gain1.connect(audioCtx.destination);
@@ -850,9 +899,11 @@
         }
 
         function getEstimatedHijri(adjustmentDays) {
-            let date = new Date(); date.setDate(date.getDate() + parseInt(adjustmentDays));
+            let date = new Date();
+            date.setDate(date.getDate() + parseInt(adjustmentDays));
             let jd = Math.floor(date.getTime() / 86400000) + 2440588;
-            let l = jd - 1948440 + 10632; let n = Math.floor((l - 1) / 10631); l = l - 10631 * n + 354;
+            let l = jd - 1948440 + 10632;
+            let n = Math.floor((l - 1) / 10631); l = l - 10631 * n + 354;
             let j = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) + (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
             l = l - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) - (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
             let m = Math.floor((24 * l) / 709); let d = l - Math.floor((709 * m) / 24); let y = 30 * n + j - 30;
@@ -860,14 +911,16 @@
         }
 
         function activateAudio() {
-            audioEnabled = true; let bellBtn = document.getElementById('audio-bell-btn');
+            audioEnabled = true;
+            let bellBtn = document.getElementById('audio-bell-btn');
             if(bellBtn) { bellBtn.classList.remove('bell-pulse'); bellBtn.classList.add('bell-active'); }
             playDigitalChime();
         }
 
         const defaultData = {
             masjidName: "جامع مسجد بلال", hijriShift: "0", specialAnnouncement: "", announcementExpiry: "",
-            fajr: "04:45", zuhr: "13:30", asr: "17:15", maghrib: "19:28", isha: "21:15", jumma: "13:30", khutba: "13:00", adminPassword: "1234"
+            fajr: "04:45", zuhr: "13:30", asr: "17:15", maghrib: "19:28", isha: "21:15", jumma: "13:30", khutba: "13:00",
+            adminPassword: "1234"
         };
         const defaultDevData = { message: "", buttonText: "", url: "", devPassword: "dev1234" };
         const prayerUrduNames = { fajr: "فجر", zuhr: "ظہر", asr: "عصر", maghrib: "مغرب", isha: "عشاء", jumma: "جمعہ" };
@@ -876,8 +929,12 @@
             const clock = document.getElementById(clockId); if (!clock) return;
             clock.innerHTML = `<div class="clock-center"></div>
             <div class="clock-face-nums">
-                <span class="num n12">12</span><span class="num n1">1</span><span class="num n2">2</span><span class="num n3">3</span><span class="num n4">4</span><span class="num n5">5</span><span class="num n6">6</span><span class="num n7">7</span><span class="num n8">8</span><span class="num n9">9</span><span class="num n10">10</span><span class="num n11">11</span>
-            </div><div class="hand hour-hand"></div><div class="hand min-hand"></div>`;
+                <span class="num n12">12</span><span class="num n1">1</span><span class="num n2">2</span>
+                <span class="num n3">3</span><span class="num n4">4</span><span class="num n5">5</span>
+                <span class="num n6">6</span><span class="num n7">7</span><span class="num n8">8</span>
+                <span class="num n9">9</span><span class="num n10">10</span><span class="num n11">11</span>
+            </div>
+            <div class="hand hour-hand"></div><div class="hand min-hand"></div>`;
         }
 
         let currentLiveGlobalData = defaultData;
@@ -886,13 +943,16 @@
             masjidMainRef.on('value', (snapshot) => {
                 let cloudData = snapshot.val();
                 if (!cloudData) { masjidMainRef.set(defaultData); cloudData = defaultData; }
-                currentLiveGlobalData = cloudData; cachedCloudAdminPassword = cloudData.adminPassword || "1234";
+                currentLiveGlobalData = cloudData;
+                cachedCloudAdminPassword = cloudData.adminPassword || "1234";
                 renderDataToUI(cloudData);
             });
+
             developerInfoRef.on('value', (snapshot) => {
                 let devData = snapshot.val();
                 if (!devData) { developerInfoRef.set(defaultDevData); devData = defaultDevData; }
-                cachedCloudDevPassword = devData.devPassword || "dev1234"; renderDeveloperUI(devData);
+                cachedCloudDevPassword = devData.devPassword || "dev1234";
+                renderDeveloperUI(devData);
             });
             syncVisitorStats();
         }
@@ -907,12 +967,15 @@
                 if (stats.lastDate !== todayKey) { stats.today = 0; stats.lastDate = todayKey; }
                 if (!hasVisitedSession) {
                     stats.total = (stats.total || 0) + 1; stats.today = (stats.today || 0) + 1;
-                    sessionStorage.setItem('hasCalculatedVisitV180', 'true'); counterRef.set(stats);
+                    sessionStorage.setItem('hasCalculatedVisitV180', 'true');
+                    counterRef.set(stats);
                 }
                 updateCounterUI(stats.total, stats.today);
             });
+
             counterRef.on('value', (snapshot) => {
-                let liveStats = snapshot.val(); if(liveStats) updateCounterUI(liveStats.total, liveStats.lastDate === todayKey ? liveStats.today : 0);
+                let liveStats = snapshot.val();
+                if(liveStats) { updateCounterUI(liveStats.total, liveStats.lastDate === todayKey ? liveStats.today : 0); }
             });
         }
 
@@ -931,7 +994,8 @@
             document.getElementById('v-khutba').innerText = format12Hour(parsedData.khutba);
             document.getElementById('v-jumma').innerText = format12Hour(parsedData.jumma);
 
-            ['fajr', 'zuhr', 'asr', 'maghrib', 'isha', 'jumma'].forEach(id => {
+            const clocks = ['fajr', 'zuhr', 'asr', 'maghrib', 'isha', 'jumma'];
+            clocks.forEach(id => {
                 setupClockFace(`clock-${id}`);
                 const dataKey = id.replace(/-([a-z])/g, g => g[1].toUpperCase());
                 setAnalogClock(`clock-${id}`, parsedData[dataKey] || defaultData[dataKey]);
@@ -951,18 +1015,24 @@
         }
 
         function renderDeveloperUI(devData) {
-            let devBox = document.getElementById('dev-info-box'), devMsg = document.getElementById('dev-message-text'), devAnchor = document.getElementById('dev-link-anchor');
+            let devBox = document.getElementById('dev-info-box');
+            let devMsg = document.getElementById('dev-message-text');
+            let devAnchor = document.getElementById('dev-link-anchor');
+
             if (devData && devData.message && devData.message.trim() !== "") {
                 devBox.style.display = "block"; devMsg.innerText = devData.message;
                 devAnchor.innerText = devData.buttonText || "تفصیلات دیکھیں"; devAnchor.href = devData.url || "#";
+                
                 document.getElementById('dev-input-message').value = devData.message;
                 document.getElementById('dev-input-btn-text').value = devData.buttonText || "";
                 document.getElementById('dev-input-url').value = devData.url || "";
             } else { devBox.style.display = "none"; }
         }
 
-        function timeStrToMinutes(str) { if(!str) return 0; const [h, m] = str.split(':').map(Number); return h * 60 + m; }
-        
+        function timeStrToMinutes(str) {
+            if(!str) return 0; const [h, m] = str.split(':').map(Number); return h * 60 + m;
+        }
+
         function addMinutesToTime(timeStr, minsToAdd) {
             if (!timeStr) return "00:00"; const [h, m] = timeStr.split(':').map(Number);
             let date = new Date(); date.setHours(h, m + minsToAdd, 0, 0);
@@ -970,7 +1040,8 @@
         }
 
         function runClockEngine() {
-            const now = new Date(); const min = now.getMinutes(), hr = now.getHours(), sec = now.getSeconds(), dayOfWeek = now.getDay();
+            const now = new Date();
+            const min = now.getMinutes(), hr = now.getHours(), sec = now.getSeconds(), dayOfWeek = now.getDay();
 
             document.getElementById('live-hr').style.transform = `translateX(-50%) rotate(${(hr % 12) * 30 + min * 0.5}deg)`;
             document.getElementById('live-min').style.transform = `translateX(-50%) rotate(${min * 6}deg)`;
@@ -982,10 +1053,12 @@
             document.getElementById('live-digital-time').innerText = `${hr % 12 || 12}:${min < 10 ? '0'+min : min}:${sec < 10 ? '0'+sec : sec} ${ampm}`;
             document.getElementById('live-date-text').innerText = now.toLocaleDateString('ur-PK', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
-            let data = currentLiveGlobalData; let hDate = getEstimatedHijri(data.hijriShift || "0");
+            let data = currentLiveGlobalData;
+            let hDate = getEstimatedHijri(data.hijriShift || "0");
             document.getElementById('islamic-date-text').innerText = `${hDate.day} ${urduMonths[hDate.month]} ${hDate.year} ھ`;
             
-            let saPanel = document.getElementById('special-announcement-panel'), saText = document.getElementById('special-announcement-text');
+            let saPanel = document.getElementById('special-announcement-panel');
+            let saText = document.getElementById('special-announcement-text');
             let todayDateStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
             if (data.specialAnnouncement && data.specialAnnouncement.trim() !== "") {
@@ -1012,9 +1085,12 @@
 
         function processLogic(currentHr, currentMin, currentSec, data, currentStrMinutes, dayOfWeek) {
             let times = {
-                fajrAzan: apiPrayerTimes ? apiPrayerTimes.Fajr : "03:45", sunrise: apiPrayerTimes ? apiPrayerTimes.Sunrise : "05:12",
-                zuhrAzan: apiPrayerTimes ? apiPrayerTimes.Dhuhr : "12:45", asrAzan: apiPrayerTimes ? apiPrayerTimes.Asr : "16:30",
-                sunset: apiPrayerTimes ? apiPrayerTimes.Sunset : "19:26", ishaAzan: apiPrayerTimes ? apiPrayerTimes.Isha : "20:50"
+                fajrAzan: apiPrayerTimes ? apiPrayerTimes.Fajr : "03:45",
+                sunrise: apiPrayerTimes ? apiPrayerTimes.Sunrise : "05:12",
+                zuhrAzan: apiPrayerTimes ? apiPrayerTimes.Dhuhr : "12:45",
+                asrAzan: apiPrayerTimes ? apiPrayerTimes.Asr : "16:30",
+                sunset: apiPrayerTimes ? apiPrayerTimes.Sunset : "19:26",
+                ishaAzan: apiPrayerTimes ? apiPrayerTimes.Isha : "20:50"
             };
 
             let nowMins = currentHr * 60 + currentMin;
@@ -1069,7 +1145,9 @@
                 if(nowMins >= pMins - 15 && nowMins <= pMins + 20) currentActiveCardId = `card-${pKey}`;
             });
 
-            if(currentActiveCardId) { let card = document.getElementById(currentActiveCardId); if(card) card.classList.add('active-card'); }
+            if(currentActiveCardId) {
+                let card = document.getElementById(currentActiveCardId); if(card) card.classList.add('active-card');
+            }
 
             document.getElementById('silent-alert-box').style.display = silentAlertActive ? 'block' : 'none';
             const totSecs = Math.floor(minDiff / 1000);
@@ -1079,24 +1157,36 @@
 
         function saveData() {
             const updates = {
-                masjidName: document.getElementById('add-masjid-name').value, hijriShift: document.getElementById('add-hijri-shift').value,
-                specialAnnouncement: document.getElementById('add-special-announcement').value, announcementExpiry: document.getElementById('add-announcement-expiry').value,
-                fajr: document.getElementById('add-fajr').value, zuhr: document.getElementById('add-zuhr').value, asr: document.getElementById('add-asr').value,
-                maghrib: document.getElementById('add-maghrib').value, isha: document.getElementById('add-isha').value, jumma: document.getElementById('add-jumma').value,
-                khutba: document.getElementById('add-khutba').value, adminPassword: cachedCloudAdminPassword
+                masjidName: document.getElementById('add-masjid-name').value,
+                hijriShift: document.getElementById('add-hijri-shift').value,
+                specialAnnouncement: document.getElementById('add-special-announcement').value,
+                announcementExpiry: document.getElementById('add-announcement-expiry').value,
+                fajr: document.getElementById('add-fajr').value,
+                zuhr: document.getElementById('add-zuhr').value,
+                asr: document.getElementById('add-asr').value,
+                maghrib: document.getElementById('add-maghrib').value,
+                isha: document.getElementById('add-isha').value,
+                jumma: document.getElementById('add-jumma').value,
+                khutba: document.getElementById('add-khutba').value,
+                adminPassword: cachedCloudAdminPassword
             };
             
-            masjidMainRef.update(updates).then(() => { alert('تبدیلیاں کامیابی سے آن لائن کلاؤڈ پر محفوظ ہو گئی ہیں!'); hidePanels(); })
-            .catch(() => alert('خرابی: ڈیٹا محفوظ نہیں ہوسکا۔'));
+            masjidMainRef.update(updates).then(() => {
+                alert('تبدیلیاں کامیابی سے آن لائن کلاؤڈ پر محفوظ ہو گئی ہیں!'); hidePanels();
+            }).catch(() => { alert('خرابی: ڈیٹا محفوظ نہیں ہوسکا۔'); });
         }
 
         function saveDeveloperData() {
             const devData = {
-                message: document.getElementById('dev-input-message').value, buttonText: document.getElementById('dev-input-btn-text').value || "تفصیلات دیکھیں",
-                url: document.getElementById('dev-input-url').value, devPassword: cachedCloudDevPassword
+                message: document.getElementById('dev-input-message').value,
+                buttonText: document.getElementById('dev-input-btn-text').value || "تفصیلات دیکھیں",
+                url: document.getElementById('dev-input-url').value,
+                devPassword: cachedCloudDevPassword
             };
-            developerInfoRef.set(devData).then(() => { alert('ڈیولپر معلومات کامیابی سے محفوظ ہو گئیں!'); hidePanels(); })
-            .catch(() => alert('خرابی: ڈیٹا محفوظ نہیں ہو سکا۔'));
+
+            developerInfoRef.set(devData).then(() => {
+                alert('ڈیولپر معلومات کامیابی سے محفوظ ہو گئیں!'); hidePanels();
+            }).catch(() => { alert('خرابی: ڈیٹا محفوظ نہیں ہو سکا۔'); });
         }
 
         function changeAdminPassword() {
@@ -1117,25 +1207,43 @@
             });
         }
 
-        function resetToDefault() { if(confirm("کیا آپ واقعی آن لائن سسٹم ری سیٹ کرنا چاہتے ہیں؟")) { masjidMainRef.set(defaultData).then(() => hidePanels()); } }
+        function resetToDefault() {
+            if(confirm("کیا آپ واقعی آن لائن سسٹم ری سیٹ کرنا چاہتے ہیں؟")) {
+                masjidMainRef.set(defaultData).then(() => { hidePanels(); });
+            }
+        }
 
         function showSecurityRouter() {
             let pass = prompt("پاس ورڈ درج کریں:");
             if (pass === cachedCloudAdminPassword) {
-                document.getElementById('user-view').style.display = 'none'; document.getElementById('developer-panel').style.display = 'none'; document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('user-view').style.display = 'none';
+                document.getElementById('developer-panel').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
             } else if (pass === cachedCloudDevPassword) { 
-                document.getElementById('user-view').style.display = 'none'; document.getElementById('admin-panel').style.display = 'none'; document.getElementById('developer-panel').style.display = 'block';
+                document.getElementById('user-view').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'none';
+                document.getElementById('developer-panel').style.display = 'block';
             } else if (pass !== null) { alert("پاس ورڈ درست نہیں ہے!"); }
         }
 
-        function hidePanels() { document.getElementById('admin-panel').style.display = 'none'; document.getElementById('developer-panel').style.display = 'none'; document.getElementById('user-view').style.display = 'block'; }
+        function hidePanels() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('developer-panel').style.display = 'none';
+            document.getElementById('user-view').style.display = 'block';
+        }
 
         window.onload = function() {
-            loadLocalSavedTheme(); initFirebaseSync(); fetchLiveWeatherAndPrayers();
+            loadLocalSavedTheme();
+            initFirebaseSync();
+            fetchLiveWeatherAndPrayers();
+            
             if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-                document.getElementById('pwa-top-install-btn').style.display = 'none'; dismissPwaBanner();
+                document.getElementById('pwa-top-install-btn').style.display = 'none';
+                dismissPwaBanner();
             }
-            setInterval(fetchLiveWeatherAndPrayers, 900000); setInterval(runClockEngine, 1000); runClockEngine();
+            setInterval(fetchLiveWeatherAndPrayers, 900000); 
+            setInterval(runClockEngine, 1000); 
+            runClockEngine();
         };
     </script>
 </body>
