@@ -745,7 +745,7 @@
         <div class="whatsapp-contact-card">
             <div class="whatsapp-card-title">🕌 فی سبیل اللہ فری مسجد ویب سائٹ سیٹ اپ</div>
             <div class="whatsapp-card-desc">اگر آپ بھی اپنے علاقے کی مسجد کے لیے یہ ڈیجیٹل ڈسپلے بورڈ ویب سائٹ بالکل مفت حاصل کرنا چاہتے ہیں، تو ابھی نیچے بٹن پر کلک کر کے رابطہ کریں۔</div>
-            <a href="https://wa.me/923425944951?text=السلام علیکم،  میں اپنی علاقے کی مسجد کے لیے یہ اسمارٹ ڈسپلے لگوانا چاہتا ہوں۔ براہِ مہربانی مجھے اس کی فری کنفیگریشن کے بارے میں بتا دیں" target="_blank" class="whatsapp-action-btn">
+            <a href="https://wa.me/923425944951?text="السلام علیکم،  میں اپنی علاقے کی مسجد کے لیے یہ اسمارٹ ڈسپلے لگوانا چاہتا ہوں۔ براہِ مہربانی مجھے اس کی فری کنفیگریشن کے بارے میں بتا دیں" target="_blank" class="whatsapp-action-btn">
                 💬 واٹس ایپ پر رابطہ کریں
             </a>
         </div>
@@ -853,7 +853,7 @@
         function shareMasjidWebsite() {
             const currentMasjidName = document.getElementById('masjid-title').innerText || "مسجد";
             const currentURL = window.location.href;
-            const shareText = ` 🕌 *نماز کے اوقات اور مسجد اپڈیٹس* 🕌\n\nالسلام علیکم! ہمارے علاقے کی *${currentMasjidName}* کا لائیو ڈیجیٹل کلاک بورڈ اور نماز کے درست اوقات اب آن لائن دستیاب ہیں۔ \n\n🔗 ${currentURL}`;
+            const shareText = ` 🕌 *نماز کے اوقات اور مسجد اپڈیٹس* 🕌\n\nالسلام علیکم! ہمارے علاقے کی *${currentMasjidName}*   گھر کے تمام افراد اور دوست احباب اس لنک پر کلک کر کے سحری، افطاری، اذان اور جماعت کے اوقات سے باخبر رہ سکتے ہیں \n\nکا لائیو ڈیجیٹل کلاک بورڈ اور نماز کے درست اوقات اب آن لائن دستیاب ہیں۔ \n\n🔗 ${currentURL}`;
 
             if (navigator.share) {
                 navigator.share({ title: currentMasjidName, text: shareText }).catch((error) => console.log('Sharing failed', error));
