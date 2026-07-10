@@ -880,7 +880,8 @@
         }
 
         async function fetchLiveWeatherAndPrayers() {
-    // Default coordinates (Peshawar) agar user location block kar de
+    // Dasync function fetchLiveWeatherAndPrayers() {
+    // Default coordinates aur name (Peshawar) agar user location block kar de
     let lat = 34.0151; 
     let lon = 71.5249; 
     let cityName = "پشاور"; 
@@ -898,7 +899,21 @@
         }
     }
 
-    // 2. Weather API Fetch Karna (Auto-fetched Location ke sath)
+    // 2. Exact City Name Fetch Karna (Reverse Geocoding)
+    try {
+        // BigDataCloud ya Nominatim ki free API se exact city name nikalna
+        const geoResponse = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+        const geoData = await geoResponse.json();
+        
+        if (geoData && (geoData.city || geoData.locality)) {
+            // Agar city field khali ho to locality ya principalSubdivision use karega
+            cityName = geoData.city || geoData.locality || geoData.principalSubdivision;
+        }
+    } catch (e) {
+        console.error("City name fetch error, using fallback/default name:", e);
+    }
+
+    // 3. Weather API Fetch Karna (Auto-fetched Location ke sath)
     try {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
         const resData = await response.json();
@@ -909,33 +924,27 @@
         console.error("Weather error:", e);
     }
 
-    // 3. Prayer Times & City Name Fetch Karna
+    // 4. Prayer Times Fetch Karna
     try {
         const pResponse = await fetch(`https://api.aladhan.com/v1/timings/${Math.floor(Date.now()/1000)}?latitude=${lat}&longitude=${lon}&method=1&school=1`);
         const pData = await pResponse.json();
         if (pData && pData.data && pData.data.timings) {
             apiPrayerTimes = pData.data.timings;
-            
-            // Location ka name auto-update karne ke liye Aladhan ka timezone city nikalna
-            if (pData.data.meta && pData.data.meta.timezone) {
-                // Example: "Asia/Karachi" -> "Karachi"
-                let tz = pData.data.meta.timezone;
-                cityName = tz.split('/')[1].replace('_', ' ');
-            }
         }
     } catch (e) {
         console.error("Prayer times error:", e);
     }
 
-    // UI Update Function ko data pass karna
+    // UI Update Function ko exact city name pass karna
     updateWeatherAndLocationUI(cityName);
 }
 
 function updateWeatherAndLocationUI(cityName) {
     let temp = autoFetchedTemp || 32;
-    // Yahan city name variable se auto-update hoga
+    // Yahan exact city name display hoga
     document.getElementById('temp-display').innerHTML = `<span id='location-name-lbl' style='color:var(--gold-color); margin-left:5px;'>📍 ${cityName}:</span> 🌡️ ${temp}°C`;
 }
+
 
 
         function getEstimatedHijri(adjustmentDays) {
